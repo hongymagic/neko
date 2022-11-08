@@ -22,6 +22,7 @@ type WebRTC struct {
 	NAT1To1IPs   []string
 	TCPMUX       int
 	UDPMUX       int
+	UDPMUXHost   string
 
 	ImplicitControl bool
 }
@@ -44,6 +45,11 @@ func (WebRTC) Init(cmd *cobra.Command) error {
 
 	cmd.PersistentFlags().Int("udpmux", 0, "single UDP mux port for all peers")
 	if err := viper.BindPFlag("udpmux", cmd.PersistentFlags().Lookup("udpmux")); err != nil {
+		return err
+	}
+
+	cmd.PersistentFlags().String("udpmuxhost", "0.0.0.0", "host for single UDP mux port for all peers")
+	if err := viper.BindPFlag("udpmuxhost", cmd.PersistentFlags().Lookup("udpmuxhost")); err != nil {
 		return err
 	}
 
@@ -80,6 +86,7 @@ func (s *WebRTC) Set() {
 	s.NAT1To1IPs = viper.GetStringSlice("nat1to1")
 	s.TCPMUX = viper.GetInt("tcpmux")
 	s.UDPMUX = viper.GetInt("udpmux")
+	s.UDPMUXHost = viper.GetString("udpmuxhost")
 	s.ICELite = viper.GetBool("icelite")
 	s.ICEServers = []webrtc.ICEServer{}
 

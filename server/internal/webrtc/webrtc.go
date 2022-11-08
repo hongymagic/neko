@@ -134,10 +134,7 @@ func (manager *WebRTCManager) initAPI() error {
 
 	// Add UDP Mux
 	if manager.config.UDPMUX > 0 {
-		udpListener, err := net.ListenUDP("udp", &net.UDPAddr{
-			IP:   net.IP{0, 0, 0, 0},
-			Port: manager.config.UDPMUX,
-		})
+		udpListener, err := net.ListenPacket("udp", fmt.Sprintf("%s:%d", manager.config.UDPMUXHost, manager.config.UDPMUX))
 
 		if err != nil {
 			return err

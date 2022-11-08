@@ -1,4 +1,4 @@
-version: "3.4"
+version: "3.7"
 services:
   neko:
     image: "m1k1o/neko:firefox"
@@ -13,3 +13,5 @@ services:
       NEKO_PASSWORD_ADMIN: admin
       NEKO_EPR: 52000-52100
       NEKO_ICELITE: 1
+      NEKO_BIND: 0.0.0.0:8080
+      NEKO_NAT1TO1: 10.101.101.116
